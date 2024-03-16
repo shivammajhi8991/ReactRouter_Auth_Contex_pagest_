@@ -6,11 +6,13 @@ import { redirect, useLoaderData } from "react-router-dom";
 // 1. provide loaders function to route
 // 2. useLoaderData and get Data
 
-export async function loader(args, { isLoggedIn }) {
+export async function loader({ request }, { isLoggedIn }) {
+  const url = new URL(request.url);
+  const pathname = url.pathname;
   const endPoint = "https://jsonplaceholder.typicode.com/posts";
   // if user is not logged in then redirect to login
   if (!isLoggedIn) {
-    return redirect("/login");
+    return redirect(`/login?redirectTo=${pathname}`);
   }
   const data = await fetch(endPoint);
   if (!data.ok) {

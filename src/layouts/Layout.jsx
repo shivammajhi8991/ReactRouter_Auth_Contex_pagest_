@@ -1,8 +1,9 @@
 import React from "react";
-import { Link, Outlet, NavLink } from "react-router-dom";
+import { Link, Outlet, NavLink, useNavigation } from "react-router-dom";
 import { useAuth } from "../context/AuthContextProvider";
 const Layout = () => {
   const { isLoggedIn, setIsLoggedIn } = useAuth();
+  const navigation = useNavigation();
   return (
     <div>
       <h1>Nav</h1>
@@ -39,8 +40,7 @@ const Layout = () => {
         )}
       </nav>
       <hr />
-
-      <Outlet />
+      {navigation.state === "loading" ? <h1>Loading...</h1> : <Outlet />}
     </div>
   );
 };
